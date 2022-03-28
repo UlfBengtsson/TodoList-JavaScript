@@ -13,7 +13,8 @@ var filterTodo = document.getElementsByClassName("filter-todo")[0];
 
 //Event Listeners
 //Step 2 Add Eventlistners here like add todo
-todoButton.addEventListener("click", () => addTodo(event));
+todoButton.addEventListener("click", addTodo);// older version todoButton.addEventListener("click", () => addTodo(event));
+filterTodo.addEventListener("change", filterTodos);
 
 //Functions // Step 3 create your li
 function addTodo(event) {
@@ -51,10 +52,13 @@ function addTodo(event) {
 
     // attach final Todo
     todoList.appendChild(todoLi);
+
+    //remove old value from input element to be ready for next todo to be added
+    todoInput.value = '';
 }
 
 function completedTodo(event) {
-    event.target.parentElement.classList.add('completed');
+    event.target.parentElement.classList.toggle('completed');
 }
 
 function deleteTodo(event) {
@@ -63,7 +67,40 @@ function deleteTodo(event) {
     event.target.parentElement.remove();
 }
 
-function filterTodo(event) {
+function filterTodos(event) {
+    //console.log("event", event);
+    //console.log("event.target", event.target);
+    console.log("event.target.value", event.target.value);
 
+    const liElments = document.getElementsByTagName('li');
+
+    switch (event.target.value) {
+        case 'all':
+            console.log("all switch");
+            for (let index = 0; index < liElments.length; index++) {
+                liElments[index].style.display = 'flex';
+            }
+            break;
+        case 'completed':
+            showHideCompleted(liElments, true);
+            break;
+        case 'uncompleted':
+            showHideCompleted(liElments, false);
+            break;
+
+        default:
+            console.log("filter switch default was triggerd");
+            break;
+    }
 }
 // use switch here as we have all, completed and uncompleted
+function showHideCompleted(liElements, showOrHide) {
+    for (let index = 0; index < liElements.length; index++) {
+        if (liElements[index].classList.contains('completed') == showOrHide) {
+            liElements[index].style.display = 'flex';
+        }
+        else {
+            liElements[index].style.display = 'none';
+        }
+    }
+}
