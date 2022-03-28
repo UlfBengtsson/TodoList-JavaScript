@@ -12,7 +12,6 @@ var todoList = document.getElementsByClassName("todo-list")[0];
 var filterTodo = document.getElementsByClassName("filter-todo")[0];
 
 //Event Listeners
-
 //Step 2 Add Eventlistners here like add todo
 todoButton.addEventListener("click", () => addTodo(event));
 
@@ -36,6 +35,7 @@ function addTodo(event) {
     const todoCompletBtn = document.createElement('button');
     todoCompletBtn.className = "complete-btn";
     todoCompletBtn.innerHTML = '<i class="fas fa-check"></i>';
+    todoCompletBtn.addEventListener("click", completedTodo);
 
     // Create trash button
     const todoTrashBtn = document.createElement('button');
@@ -51,6 +51,10 @@ function addTodo(event) {
 
     // attach final Todo
     todoList.appendChild(todoLi);
+}
+
+function completedTodo(event) {
+    event.target.parentElement.classList.add('completed');
 }
 
 function deleteTodo(event) {
